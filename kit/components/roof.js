@@ -24,14 +24,6 @@
           }
         }
       });
-    }else{
-      sink.scope('roof/lite-eave-course','tile',function(){
-        const columns=Math.max(5,Math.floor(profile.width/(tile*1.05))),radius=Math.min(tile*.46,profile.width/columns*.42);
-        for(let column=0;column<=columns;column++){
-          const x=-profile.halfWidth+profile.width*column/columns,variation=JiangnanRandom.signed(seed,'lite-eave-'+Math.floor(column/3))*style.tileVariation*.18;
-          [-1,1].forEach(function(side){const base=typeof tileColor==='string'?sink.color(tileColor):tileColor;JiangnanElements.curvedTile(sink,profile,side,x,.80,1,radius,3,sink.tone(base,variation),false);});
-        }
-      });
     }
     sink.scope('roof/ridge','tile',function(){JiangnanElements.ridge(sink,profile,style,spec.ridgeScale||1,spec.ridgeColor||tileColor);});
     sink.metadata({id:spec.id+'/roof',type:'roof',detailLevel:mode,visualEnvelope:{width:profile.width,depth:profile.depth,baseY:profile.baseY,ridgeY:profile.ridgeY}});
