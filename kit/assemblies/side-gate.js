@@ -47,9 +47,10 @@
       authoring=value.authoringOffsets||window.JiangnanAuthoringOffsets||{},
       authoringScales=value.authoringScales||window.JiangnanAuthoringScales||{};
 
-    const bakedOffsets={leftColumn:[-.0573,0,.05],rightColumn:[.0573,0,.0764]};
+    const bakedOffsets={leftColumn:[-.0858,0,.0264],rightColumn:[.0858,0,0]};
+    const bakedScales={platform:[1.05,1,1]};
     function off(id){const raw=authoring[id],base=bakedOffsets[id]||[0,0,0];return[base[0]+(Array.isArray(raw)?Number(raw[0])||0:0),base[1]+(Array.isArray(raw)?Number(raw[1])||0:0),base[2]+(Array.isArray(raw)?Number(raw[2])||0:0)];}
-    function scl(id){const raw=authoringScales[id];return Array.isArray(raw)?raw.map(function(v){const n=Number(v);return Number.isFinite(n)?Math.max(.1,Math.min(4,n)):1;}):[1,1,1];}
+    function scl(id){const raw=authoringScales[id],base=bakedScales[id]||[1,1,1];return base.map(function(value,index){const n=Array.isArray(raw)?Number(raw[index]):1;return value*(Number.isFinite(n)?Math.max(.1,Math.min(4,n)):1);});}
     function withPart(id,pivot,action){sink.withTransform({position:off(id),scale:scl(id),pivot:pivot},action);}
     function world(local,id){const o=off(id);return[position[0]+local[0]+o[0],position[1]+local[1]+o[1],position[2]+local[2]+o[2]];}
 
