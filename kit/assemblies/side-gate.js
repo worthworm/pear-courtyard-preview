@@ -19,6 +19,11 @@
     const position=value.position||[0,0,0],openingWidth=value.openingWidth||1.42,gateHeight=value.gateHeight||1.90,gateDepth=value.gateDepth||.42,joinThickness=value.postThickness||style.columnRadius*2.2,postRadius=Math.min(joinThickness*.32,style.columnRadius*.74),baseHeight=.15,columnTop=gateHeight-.13,columnHeight=columnTop-baseHeight,postX=openingWidth/2+postRadius*.78,roofWidth=openingWidth+joinThickness*2+.30,roofDepth=Math.max(.72,gateDepth*1.65),roofBaseY=gateHeight-.02,roofHeight=.44,doorBottom=.10,doorWidth=openingWidth*.92,doorHeight=gateHeight-.30,doorDepth=Math.min(.095,gateDepth*.24),doorOpenAngle=Math.max(Math.PI*.44,Number.isFinite(value.doorOpenAngle)?value.doorOpenAngle:0),doorOpenMode=value.doorOpenMode||'open',seed=value.seed||71002;
     sink.withTransform({position:position},function(){
       sink.scope('side-gate/entry-platform','stone',function(){sink.box(0,.045,gateDepth*.46+.14,openingWidth+.34,.09,.52,'stone');});
+      sink.scope('side-gate/wing-walls','wall',function(){
+        const wingWidth=Math.max(.30,(roofWidth-openingWidth)*.5),wingHeight=gateHeight-.04,wingDepth=gateDepth*.84,wingOffset=openingWidth/2+wingWidth/2-.02,wingZ=-gateDepth*.05;
+        sink.box(-wingOffset,wingHeight/2,wingZ,wingWidth,wingHeight,wingDepth,'wall');
+        sink.box(wingOffset,wingHeight/2,wingZ,wingWidth,wingHeight,wingDepth,'wall');
+      });
       sink.scope('side-gate/wall-reveals','wall',function(){
         const revealWidth=joinThickness*.92,revealX=openingWidth/2+revealWidth/2,revealDepth=gateDepth*.82;
         sink.box(-revealX,(gateHeight-.05)/2,-gateDepth*.05,revealWidth,gateHeight-.05,revealDepth,'wall');
@@ -44,7 +49,7 @@
     sink.anchor({id:value.id+'/front/eave/lantern-left',position:[position[0]-openingWidth*.46,lanternY,lanternZ],normal:[0,0,1],tags:['eave-hang','lantern']});
     sink.anchor({id:value.id+'/front/eave/lantern-right',position:[position[0]+openingWidth*.46,lanternY,lanternZ],normal:[0,0,1],tags:['eave-hang','lantern']});
     sink.anchor({id:value.id+'/doorstep/center',position:[position[0],position[1],position[2]+gateDepth*.56],normal:[0,0,1],tags:['doorstep','prop']});
-    sink.metadata({id:value.id,type:'sideGate',openingWidth:openingWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:1,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,doorConstruction:'single-vertical-plank',roofType:'small-gable',columnStyle:'slender-octagonal',embeddedWallReveal:true,entryPlatform:true,doorRing:true,openingClear:true,interiorBacking:false,visualBounds:{position:position,width:roofWidth,height:roofBaseY+roofHeight,depth:roofDepth+(value.eaveOverhang||.15)*2},gameplayFootprint:null});
+    sink.metadata({id:value.id,type:'sideGate',openingWidth:openingWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:1,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,doorConstruction:'single-vertical-plank',roofType:'small-gable',columnStyle:'slender-octagonal',embeddedWallReveal:true,entryPlatform:true,doorRing:true,openingClear:true,interiorBacking:false,sideWallWings:true,visualBounds:{position:position,width:roofWidth,height:roofBaseY+roofHeight,depth:roofDepth+(value.eaveOverhang||.15)*2},gameplayFootprint:null});
     return{openingWidth:openingWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:1,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,postThickness:joinThickness,roofComplexity:(value.roofComplexity||'LITE').toUpperCase()};
   }
   window.JiangnanSideGate={build:build};
