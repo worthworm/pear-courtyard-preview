@@ -15,7 +15,11 @@
       sink.scope('wall/press-cap','wall',function(){const press=sink.tone(sink.color('wall'),.025);sink.box(length/2,height+.085,0,length+.18,.20,thickness+.42,press);});
       if(spec.capType!=='plain')sink.withTransform({position:[length/2,0,0]},function(){JiangnanRoof.build(sink,{id:spec.id+'/cap',width:length,depth:thickness+.05,baseY:height+.18,roofHeight:style.wallCapHeight*.72,eaveOverhang:.11,mode:'LITE',seed:seed+31,showRafters:false,eaveThicknessScale:.50,ridgeScale:.78,tileColor:sink.tone(sink.color('tile'),.16),ridgeColor:sink.tone(sink.color('tile'),.28)},style);});
       sink.scope('wall/end-caps','stone',function(){
-        if(spec.cornerType==='end-cap'||spec.cornerType==='both'){sink.box(.035,height*.52,0,.07,height+.16,thickness+.16,'stone');sink.box(length-.035,height*.52,0,.07,height+.16,thickness+.16,'stone');}
+        if(spec.cornerType==='end-cap'||spec.cornerType==='both'){
+          const capWidth=.07,faceOffset=.006;
+          sink.box(capWidth/2-faceOffset,height*.52,0,capWidth,height+.16,thickness+.16,'stone');
+          sink.box(length-capWidth/2+faceOffset,height*.52,0,capWidth,height+.16,thickness+.16,'stone');
+        }
       });
     });
     const tangent=[dx/length,0,dz/length],normal=[-tangent[2],0,tangent[0]],prefix=spec.id;
