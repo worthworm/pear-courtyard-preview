@@ -10,20 +10,43 @@
   <canvas id="world"></canvas>
   <header>
     <p class="eyebrow">梨花小院 · LIVE ARCHITECTURE REVIEW</p>
-    <h1>江南建筑构件 · Checkpoint B · B-R007</h1>
-    <p id="subtitle">双扇木板院门 / 双扇木板侧门 / 灰白院墙</p>
+    <h1>江南建筑构件 · 实时预览</h1>
+    <p id="subtitle">院门 / 侧门 / 灰白院墙</p>
   </header>
   <nav aria-label="预览控制">
     <button data-view="gate-courtyard-front">院门正面</button>
     <button data-view="gate-courtyard-45">院门 45°</button>
     <button data-view="gate-side-front">侧门正面</button>
     <button data-view="gate-side-45">侧门 45°</button>
+    <button id="authoring-toggle">拖动部件</button>
     <button id="silhouette">Silhouette</button>
     <button id="wall-candidate">历史墙色 B</button>
   </nav>
+  <aside id="authoring-panel" hidden aria-label="部件编辑">
+    <strong>侧门部件 Gizmo</strong>
+    <label>部件
+      <select id="part-select"></select>
+    </label>
+    <div class="offset-grid">
+      <label>X <input id="offset-x" type="number" step="0.01" min="-3" max="3" value="0"></label>
+      <label>Y <input id="offset-y" type="number" step="0.01" min="-3" max="3" value="0"></label>
+      <label>Z <input id="offset-z" type="number" step="0.01" min="-3" max="3" value="0"></label>
+    </div>
+    <div class="authoring-actions">
+      <button id="reset-part" type="button">复位当前</button>
+      <button id="reset-all" type="button">全部复位</button>
+    </div>
+    <p>拖动场景中的 X / Y / Z 轴箭头。拖空白处仍可旋转镜头。</p>
+  </aside>
+  <div id="transform-gizmo" hidden aria-label="三轴移动 Gizmo">
+    <button type="button" class="gizmo-axis gizmo-x" data-axis="x" aria-label="沿 X 轴拖动"><span>X</span></button>
+    <button type="button" class="gizmo-axis gizmo-y" data-axis="y" aria-label="沿 Y 轴拖动"><span>Y</span></button>
+    <button type="button" class="gizmo-axis gizmo-z" data-axis="z" aria-label="沿 Z 轴拖动"><span>Z</span></button>
+    <i class="gizmo-origin" aria-hidden="true"></i>
+  </div>
   <aside id="legend">
     <div><span>院门</span><b>普通竖向拼板 · 双扇</b></div>
-    <div><span>侧门</span><b>普通竖向拼板 · 双扇</b></div>
+    <div><span>侧门</span><b>白墙中的单扇侧门</b></div>
     <div><span>门板</span><b>中浅灰褐旧木色</b></div>
     <div><span>院墙</span><b>灰白墙身 · 深灰瓦帽</b></div>
   </aside>
