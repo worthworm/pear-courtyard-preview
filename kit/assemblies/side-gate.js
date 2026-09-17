@@ -55,7 +55,7 @@
     const sideWallThickness=Math.max(.20,joinThickness*1.05),
       sideWallInner=doorOpeningWidth/2+.02,
       sideWallX=sideWallInner+sideWallThickness/2,
-      wallBack=-.13,
+      wallBack=-roofHalfDepth+.055,
       wallFront=roofHalfDepth-.045,
       sideWallDepth=wallFront-wallBack,
       sideWallZ=(wallFront+wallBack)/2,
@@ -86,8 +86,8 @@
     function gableWall(x){
       const baseY=sideWallHeight-.005,
         ridgeY=roofBaseY+roofHeight*.88,
-        zBack=Math.max(-roofHalfDepth+.055,wallBack),
-        zFront=Math.min(roofHalfDepth-.055,wallFront);
+        zBack=-roofHalfDepth+.055,
+        zFront=roofHalfDepth-.055;
       sink.tri([x,baseY,zBack],[x,baseY,zFront],[x,ridgeY,0],'wall');
     }
 
@@ -187,7 +187,7 @@
       entryPlatform:true,doorRing:true,openingClear:true,interiorBacking:false,
       sideWallsProjectForward:true,sideWallsPerpendicularToCourtyardWall:true,
       sideWallFront:wallFront,sideWallBack:wallBack,sideWallThickness:sideWallThickness,
-      gableWallInfill:true,postZ:postZ,authoringParts:authoringParts,
+      gableWallInfill:true,gableWallFullSpan:true,postZ:postZ,authoringParts:authoringParts,
       authoringOffsets:authoring,authoringScales:authoringScales,
       visualBounds:{position:position,width:roofWidth+eaveOverhang*2,height:roofBaseY+roofHeight,depth:Math.max(roofHalfDepth*2,platformDepth)},gameplayFootprint:null
     });
