@@ -8,6 +8,7 @@
 </head>
 <body>
   <canvas id="world"></canvas>
+  <canvas id="snap-grid" hidden aria-hidden="true"></canvas>
   <header>
     <p class="eyebrow">梨花小院 · LIVE ARCHITECTURE REVIEW</p>
     <h1>江南建筑构件 · 实时预览</h1>
@@ -28,15 +29,19 @@
       <select id="part-select"></select>
     </label>
     <div class="offset-grid">
-      <label>X <input id="offset-x" type="number" step="0.01" min="-3" max="3" value="0"></label>
-      <label>Y <input id="offset-y" type="number" step="0.01" min="-3" max="3" value="0"></label>
-      <label>Z <input id="offset-z" type="number" step="0.01" min="-3" max="3" value="0"></label>
+      <label>X <input id="offset-x" type="number" step="0.05" min="-3" max="3" value="0"></label>
+      <label>Y <input id="offset-y" type="number" step="0.025" min="-3" max="3" value="0"></label>
+      <label>Z <input id="offset-z" type="number" step="0.05" min="-3" max="3" value="0"></label>
+    </div>
+    <div class="snap-controls">
+      <button id="snap-toggle" type="button" class="active">网格吸附：开</button>
+      <span id="snap-readout">X/Z 5cm · Y 2.5cm</span>
     </div>
     <div class="authoring-actions">
       <button id="reset-part" type="button">复位当前</button>
       <button id="reset-all" type="button">全部复位</button>
     </div>
-    <p>拖动场景中的 X / Y / Z 轴箭头。拖空白处仍可旋转镜头。</p>
+    <p>拖动 X / Y / Z 轴会吸附网格。Alt 临时切到 1cm 精细吸附，Shift 临时切到 25cm 粗吸附；关闭吸附后可自由拖动。拖空白处仍可旋转镜头。</p>
   </aside>
   <div id="transform-gizmo" hidden aria-label="三轴移动 Gizmo">
     <button type="button" class="gizmo-axis gizmo-x" data-axis="x" aria-label="沿 X 轴拖动"><span>X</span></button>
@@ -68,6 +73,7 @@
   <script src="kit/architecture-schema.js"></script>
   <script src="kit/architecture-kit.js"></script>
   <script src="preview-runtime.js"></script>
+  <script src="preview-grid.js"></script>
   <script>
     JiangnanPreview.setVariant('gate-stage');
     JiangnanPreview.setView('gate-courtyard-45');
