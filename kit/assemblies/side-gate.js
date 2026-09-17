@@ -52,21 +52,24 @@
     function withPart(id,pivot,action){sink.withTransform({position:off(id),scale:scl(id),pivot:pivot},action);}
     function world(local,id){const o=off(id);return[position[0]+local[0]+o[0],position[1]+local[1]+o[1],position[2]+local[2]+o[2]];}
 
-    const sideWallThickness=Math.max(.20,joinThickness*1.05),
-      sideWallInner=doorOpeningWidth/2+.02,
-      sideWallX=sideWallInner+sideWallThickness/2,
+    const nominalWallThickness=Math.max(.20,joinThickness*1.05),
+      nominalWallInner=doorOpeningWidth/2+.02,
+      wallOuter=nominalWallInner+nominalWallThickness,
+      postX=nominalWallInner-postRadius*.22,
+      sideWallInner=postX+postRadius*.95+.008,
+      sideWallThickness=Math.max(.10,wallOuter-sideWallInner),
+      sideWallX=(sideWallInner+wallOuter)/2,
       wallBack=-roofHalfDepth+.055,
       wallFront=roofHalfDepth-.045,
       sideWallDepth=wallFront-wallBack,
       sideWallZ=(wallFront+wallBack)/2,
       sideWallHeight=roofBaseY-.045,
-      postX=sideWallInner-postRadius*.22,
       postZ=wallFront-postRadius*.18,
       jambWidth=Math.max(.055,postRadius*.80),
       jambDepth=.18,
       jambZ=doorZ+.015,
-      jambX=doorOpeningWidth/2+jambWidth/2,
-      platformWidth=sideWallX*2+sideWallThickness-.08,
+      jambX=sideWallInner+jambWidth/2,
+      platformWidth=wallOuter*2-.08,
       platformBack=wallBack+.03,
       platformFront=wallFront+.16,
       platformDepth=platformFront-platformBack,
@@ -93,7 +96,7 @@
     const lanternZ=position[2]+roofHalfDepth,lanternY=position[1]+gateHeight-.18;
     sink.anchor({id:value.id+'/front/eave/lantern-left',position:[position[0]-postX,lanternY,lanternZ],normal:[0,0,1],tags:['eave-hang','lantern']});sink.anchor({id:value.id+'/front/eave/lantern-right',position:[position[0]+postX,lanternY,lanternZ],normal:[0,0,1],tags:['eave-hang','lantern']});sink.anchor({id:value.id+'/doorstep/center',position:[position[0],position[1],position[2]+platformZ],normal:[0,0,1],tags:['doorstep','prop']});
     const authoringParts=[{id:'leftWall',label:'左侧墙',position:world(pivots.leftWall,'leftWall')},{id:'rightWall',label:'右侧墙',position:world(pivots.rightWall,'rightWall')},{id:'door',label:'双扇门',position:world(pivots.door,'door')},{id:'roof',label:'门楼屋顶',position:world(pivots.roof,'roof')},{id:'leftColumn',label:'左柱',position:world(pivots.leftColumn,'leftColumn')},{id:'rightColumn',label:'右柱',position:world(pivots.rightColumn,'rightColumn')},{id:'frame',label:'门楼木构',position:world(pivots.frame,'frame')},{id:'platform',label:'门前石台',position:world(pivots.platform,'platform')}];
-    sink.metadata({id:value.id,type:'sideGate',openingWidth:openingWidth,visualDoorOpeningWidth:doorOpeningWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:2,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,equalLeafOpenAngle:true,doorConstruction:'double-vertical-plank',roofType:'small-gable',columnStyle:'slender-octagonal',embeddedWallReveal:true,entryPlatform:true,doorRing:true,openingClear:true,interiorBacking:false,sideWallsProjectForward:true,sideWallsPerpendicularToCourtyardWall:true,sideWallFront:wallFront,sideWallBack:wallBack,sideWallThickness:sideWallThickness,gableWallInfill:false,postZ:postZ,authoringParts:authoringParts,authoringOffsets:authoring,authoringScales:authoringScales,visualBounds:{position:position,width:roofWidth+eaveOverhang*2,height:roofBaseY+roofHeight,depth:Math.max(roofHalfDepth*2,platformDepth)},gameplayFootprint:null});
+    sink.metadata({id:value.id,type:'sideGate',openingWidth:openingWidth,visualDoorOpeningWidth:doorOpeningWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:2,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,equalLeafOpenAngle:true,doorConstruction:'double-vertical-plank',roofType:'small-gable',columnStyle:'slender-octagonal',embeddedWallReveal:true,entryPlatform:true,doorRing:true,openingClear:true,interiorBacking:false,sideWallsProjectForward:true,sideWallsPerpendicularToCourtyardWall:true,sideWallFront:wallFront,sideWallBack:wallBack,sideWallThickness:sideWallThickness,sideWallInner:sideWallInner,gableWallInfill:false,postZ:postZ,authoringParts:authoringParts,authoringOffsets:authoring,authoringScales:authoringScales,visualBounds:{position:position,width:roofWidth+eaveOverhang*2,height:roofBaseY+roofHeight,depth:Math.max(roofHalfDepth*2,platformDepth)},gameplayFootprint:null});
     return{openingWidth:openingWidth,gateHeight:gateHeight,gateDepth:gateDepth,doorLeafCount:2,doorOpenAngle:doorOpenAngle,doorOpenMode:doorOpenMode,postThickness:joinThickness,roofComplexity:(value.roofComplexity||'LITE').toUpperCase()};
   }
 
