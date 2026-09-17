@@ -3,7 +3,7 @@
 (function(){
   function build(sink,spec,style){
     const profile=JiangnanProfiles.gableRoof({width:spec.width,depth:spec.depth,baseY:spec.baseY,roofHeight:spec.roofHeight,pitch:spec.pitch||style.roofBasePitch,eaveOverhang:spec.eaveOverhang});
-    const mode=(spec.mode||'LITE').toUpperCase(),seed=spec.seed||1,random=JiangnanRandom.create(seed,'roof-courses'),tile=style.tileScale,tileColor=spec.tileColor||'tile';
+    const mode=(spec.mode||'LITE').toUpperCase(),seed=spec.seed||1,tile=style.tileScale,tileColor=spec.tileColor||'tile';
     sink.scope('roof/base','tile',function(){
       JiangnanElements.roofPlane(sink,profile,-1,tileColor);JiangnanElements.roofPlane(sink,profile,1,tileColor);
       const fasciaHeight=style.eaveThickness*(spec.eaveThicknessScale||1);
@@ -25,13 +25,6 @@
         }
       });
     }else{
-      sink.scope('roof/lite-ribs','tile',function(){
-        const columns=Math.max(5,Math.floor(profile.width/(tile*1.05)));
-        for(let column=0;column<=columns;column++){
-          const x=-profile.halfWidth+profile.width*column/columns,variation=JiangnanRandom.signed(seed,'lite-band-'+Math.floor(column/3))*style.tileVariation*.16,base=typeof tileColor==='string'?sink.color(tileColor):tileColor;
-          [-1,1].forEach(function(side){const a=profile.point(side,x,.02),b=profile.point(side,x,1);sink.beam3(a,b,tile*.18,tile*.18,base,variation);});
-        }
-      });
       sink.scope('roof/lite-eave-course','tile',function(){
         const columns=Math.max(5,Math.floor(profile.width/(tile*1.05))),radius=Math.min(tile*.46,profile.width/columns*.42);
         for(let column=0;column<=columns;column++){
